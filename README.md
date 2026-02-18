@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 時間割検索システム (Timetable Search System)
 
-## Getting Started
+学期・学年・学科ごとに時間割を素早く検索・閲覧できるWebアプリケーション。
 
-First, run the development server:
+## 1. 機能の説明
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+・条件絞り込み検索: 学期（前・後）、学年、学科を選択して対象の時間割を表示。
+・学科の動的連動: 選択した「学年」に応じて、選択可能な「学科」リストを自動切り替え。
+・任意条件フィルタリング: 曜日や時間帯（午前・午後）を指定したピンポイント検索が可能。
+・レスポンシブな時間割表示: 授業がない枠は自動的に「休み」と表示するグリッド形式のテーブルを採用。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2. ページ構成の説明
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+トップページ : 検索条件を指定するメインフォーム。
+・検索結果ページ : 条件に基づきサーバー側でデータを取得し、時間割テーブルを表示。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 3. ディレクトリ構成の説明
 
-## Learn More
+・`app/`: ページのルーティング（App Router）とスタイル（CSS Modules）を管理。
+・ `components/`: フォームやテーブルなど、再利用可能なUI部品を格納。
+・ `lib/`: API通信ロジック、定数（学科・学年データ）、型定義を管理。
 
-To learn more about Next.js, take a look at the following resources:
+## 4. microCMS にアクセスする処理の説明
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+・ `lib/microcms.ts` 内で `fetch` API を利用し、microCMS エンドポイントへリクエストを送信。
+・ `filters` パラメータを用い、`[contains]` や `[and]` による複数条件の同時フィルタリングを実現。
+・`cache: "no-store"` を指定し、常に最新のデータを取得するリアルタイム性を確保。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 5. 工夫した点
 
-## Deploy on Vercel
+・学年を選んだらその学年に存在する学科だけを選べるようにしたこと
+・検索結果ページからもとのトップページに戻る際に履歴が残るようにした
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 6. 苦労した点
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+・全学年の時間割データを入れるのが大変だった
+・AIに大きく頼ってしまったため、バグが起きたときにどこを直せばいいかわからなかったこと。
+・自分の理解を深めるのに時間がかかったこと
