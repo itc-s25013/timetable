@@ -1,11 +1,12 @@
 import SearchForm from "@/components/SearchForm";
+import styles from "./page.module.css";
 
 export default function HomePage() {
   return (
-    <main style={{ padding: 24 }}>
-      <h1 style={{ fontSize: 24, fontWeight: 700 }}>時間割検索</h1>
-      <p style={{ marginTop: 8 }}>学期・学科・学年を選んで検索します。</p>
-      <div style={{ marginTop: 16 }}>
+    <main className={styles.page}>
+      <div style={{ width: "100%", maxWidth: 860 }}>
+        <h1 className={styles.title}>時間割検索</h1>
+        <p className={styles.desc}>学期・学年・学科を選択します。</p>
         <SearchForm />
       </div>
     </main>
