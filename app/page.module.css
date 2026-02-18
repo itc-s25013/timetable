@@ -26,6 +26,10 @@
   color: #555; /* 色はそのまま */
   line-height: 1.7;
 }
+.container {
+  width: 100%;
+  max-width: 1100px; /* 860 → 1100 に */
+}
 
 @media (max-width: 600px) {
   .page {
